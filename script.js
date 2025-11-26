@@ -1,4 +1,3 @@
-// Инициализация элементов и опций
 document.addEventListener('DOMContentLoaded', () => {
     const localTimeElement = document.getElementById('localTime');
     const timezoneSelect = document.getElementById('timezoneSelect');
@@ -32,24 +31,27 @@ document.addEventListener('DOMContentLoaded', () => {
         timezoneSelect.appendChild(option);
     });
 
-    // Поиск по названию города/страны
+    // Функция поиска города или страны
     searchInput.addEventListener('input', () => {
-        const searchText = searchInput.value.toLowerCase();
+        const query = searchInput.value.trim().toLowerCase();
         const options = timezoneSelect.options;
 
-        for (let i = 0; i < options.length; i++) {
-            const optionText = options[i].textContent.toLowerCase();
-            options[i].style.display = optionText.includes(searchText) ? 'block' : 'none';
+        for (const option of options) {
+            if (option.textContent.toLowerCase().includes(query)) {
+                option.style.display = ''; // Показывать совпадающие элементы
+            } else {
+                option.style.display = 'none'; // Скрывать неподходящие элементы
+            }
         }
     });
 
-    // Конвертация времени по выбранному часовому поясу
+    // Конвертация местного времени в выбранный часовой пояс
     convertButton.addEventListener('click', () => {
-        const timeZone = timezoneSelect.value;
-        if (timeZone) {
-            const localTime = new Date();
+        const selectedTimezone = timezoneSelect.value;
+        if (selectedTimezone) {
+            const now = new Date();
             const options = {
-                timeZone: timeZone,
+                timeZone: selectedTimezone,
                 hour12: false, // 24-часовой формат
                 year: 'numeric',
                 month: '2-digit',
@@ -58,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 minute: '2-digit',
                 second: '2-digit',
             };
-            convertedTimeElement.textContent = `Time in ${timeZone}: ${localTime.toLocaleString('en-GB', options)}`;
+            convertedTimeElement.textContent = `Time in ${selectedTimezone}: ${now.toLocaleString('en-GB', options)}`;
         } else {
             convertedTimeElement.textContent = 'Please select a time zone.';
         }
