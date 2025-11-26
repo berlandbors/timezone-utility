@@ -1,1 +1,45 @@
-1
+// Initialize local and timezone options
+document.addEventListener('DOMContentLoaded', () => {
+    const localTimeElement = document.getElementById('localTime');
+    const timezoneSelect = document.getElementById('timezoneSelect');
+    const convertedTimeElement = document.getElementById('convertedTime');
+    const convertButton = document.getElementById('convertButton');
+
+    // Display local time
+    function updateLocalTime() {
+        const now = new Date();
+        localTimeElement.textContent = now.toLocaleString();
+    }
+    updateLocalTime();
+    setInterval(updateLocalTime, 1000);
+
+    // Populate timezone options
+    const timezones = Intl.supportedValuesOf('timeZone');
+    timezones.forEach(zone => {
+        const option = document.createElement('option');
+        option.value = zone;
+        option.textContent = zone;
+        timezoneSelect.appendChild(option);
+    });
+
+    // Convert and display the time for the selected timezone
+    convertButton.addEventListener('click', () => {
+        const timeZone = timezoneSelect.value;
+        if (timeZone) {
+            const localTime = new Date();
+            const options = {
+                timeZone: timeZone,
+                timeZoneName: 'short',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            };
+            convertedTimeElement.textContent = `Time in ${timeZone}: ${localTime.toLocaleString('en-US', options)}`;
+        } else {
+            convertedTimeElement.textContent = 'Please select a time zone.';
+        }
+    });
+});
