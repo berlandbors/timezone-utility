@@ -1,26 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time Zone Utility</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Timezone Tiles</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <h1>Time Zone Utility</h1>
-    <div class="container">
-        <div class="local-time">
-            <h2>Local Time</h2>
-            <p id="localTime"></p>
-        </div>
-        <div class="timezone-input">
-            <h2>Convert Local Time</h2>
-            <input type="text" id="searchInput" placeholder="Search city or country...">
-            <select id="timezoneSelect"></select>
-            <button id="convertButton">Convert</button>
-            <p id="convertedTime"></p>
-        </div>
-    </div>
-    <script src="script.js"></script>
+  <header class="header">
+    <h1>Timezone Tiles</h1>
+    <p class="lead">Добавляйте тайлы с текущим временем в разных часовых поясах.</p>
+  </header>
+
+  <main class="app">
+    <aside class="controls" aria-labelledby="controls-heading">
+      <h2 id="controls-heading">Добавить зону</h2>
+
+      <label for="searchInput" class="label">Поиск</label>
+      <input id="searchInput" class="input" type="search" placeholder="Поиск города или зоны..." />
+
+      <label for="timezoneSelect" class="label">Выберите зону</label>
+      <select id="timezoneSelect" class="select" size="8" aria-label="Список часовых поясов"></select>
+
+      <div class="buttons">
+        <button id="addButton" type="button" class="btn">Добавить плитку</button>
+        <button id="addLocalButton" type="button" class="btn btn-ghost">Добавить локальную</button>
+      </div>
+
+      <div class="controls-footer">
+        <button id="clearAll" type="button" class="btn btn-danger">Очистить все</button>
+      </div>
+    </aside>
+
+    <section class="tiles-area" aria-live="polite">
+      <div id="tiles" class="tiles" aria-label="Плитки часовых поясов"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Используется Intl API для форматирования и определения IANA часовых зон.</small>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
